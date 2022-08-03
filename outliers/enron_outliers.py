@@ -5,12 +5,22 @@ import sys
 import matplotlib.pyplot
 sys.path.append(os.path.abspath("../tools/"))
 from feature_format import featureFormat, targetFeatureSplit
+import numpy as np
 
 
 ### read in data dictionary, convert to numpy array
 data_dict = joblib.load( open("../final_project/final_project_dataset.pkl", "rb") )
 features = ["salary", "bonus"]
 data = featureFormat(data_dict, features)
+
+for _ in range(6):
+    indices = np.where(data == data.max())
+    data = np.delete(data,indices,0)
+
+data = data[data[:, 0].argsort()]
+data = np.delete(data, 82, 0)
+
+
 
 
 ### your code below
@@ -22,5 +32,4 @@ for point in data:
 matplotlib.pyplot.xlabel("salary")
 matplotlib.pyplot.ylabel("bonus")
 matplotlib.pyplot.show()
-
 
